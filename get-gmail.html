@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>XBoxmail - Sign Up / Login</title>
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #6B73FF 0%, #000DFF 100%);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+    .container {
+      background: #1a1a2e;
+      border-radius: 12px;
+      width: 360px;
+      padding: 2rem 2.5rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    input[type="email"],
+    input[type="password"],
+    input[type="text"] {
+      padding: 0.8rem 1rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      outline: none;
+      transition: box-shadow 0.3s ease;
+    }
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    input[type="text"]:focus {
+      box-shadow: 0 0 8px #6b73ff;
+      background: #26263f;
+      color: #fff;
+    }
+    button {
+      background: #6b73ff;
+      border: none;
+      padding: 0.9rem;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: white;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #000dff;
+    }
+    .toggle {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+    .toggle span {
+      color: #6b73ff;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    /* Hide signup form by default */
+    #signup-form {
+      display: none;
+      animation: fadeIn 0.4s ease forwards;
+    }
+    /* Show signup form when toggled */
+    .show-signup #signup-form {
+      display: flex;
+    }
+    /* Hide login form when toggled */
+    .show-signup #login-form {
+      display: none;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="form-container">
+    <h2 id="form-title">Login to XBoxmail</h2>
+    <form id="login-form">
+      <input type="email" id="login-email" placeholder="Email address" required />
+      <input type="password" id="login-password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+    <form id="signup-form">
+      <input type="text" id="signup-name" placeholder="Full Name" required />
+      <input type="email" id="signup-email" placeholder="Email address" required />
+      <input type="password" id="signup-password" placeholder="Password" required />
+      <button type="submit">Sign Up</button>
+    </form>
+    <p class="toggle">
+      <span id="toggle-link">Don't have an account? Sign Up</span>
+    </p>
+  </div>
+
+  <script>
+    const container = document.getElementById('form-container');
+    const toggleLink = document.getElementById('toggle-link');
+    const formTitle = document.getElementById('form-title');
+
+    toggleLink.addEventListener('click', () => {
+      container.classList.toggle('show-signup');
+      if(container.classList.contains('show-signup')) {
+        formTitle.textContent = 'Create your XBoxmail Account';
+        toggleLink.textContent = 'Already have an account? Login';
+      } else {
+        formTitle.textContent = 'Login to XBoxmail';
+        toggleLink.textContent = "Don't have an account? Sign Up";
+      }
+    });
+
+    // Placeholder form submission handlers
+    document.getElementById('login-form').addEventListener('submit', e => {
+      e.preventDefault();
+      alert('Login functionality coming soon!');
+    });
+
+    document.getElementById('signup-form').addEventListener('submit', e => {
+      e.preventDefault();
+      alert('Signup functionality coming soon!');
+    });
+  </script>
+</body>
+</html>
