@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>XBoxMail Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    /* Dark mode styles */
+    body.dark {
+      background: #1a1a2e;
+      color: #e0e0e0;
+    }
+    body.dark .card {
+      background: #2c2c4a;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+    }
+    .toggle-button {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen transition-colors duration-300">
+
+  <div class="max-w-7xl mx-auto px-6 py-8">
+    <!-- Header -->
+    <header class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold">Welcome, <span id="user-email">User</span></h1>
+      <button id="darkModeToggle" class="toggle-button px-4 py-2 rounded bg-gray-800 text-white">Dark Mode</button>
+    </header>
+
+    <!-- Stats Cards -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="card bg-white rounded-xl p-6 shadow-lg">
+        <h2 class="text-xl font-semibold mb-2">Instant Gmail Accounts</h2>
+        <p class="text-3xl font-bold" id="gmail-count">0</p>
+      </div>
+      <div class="card bg-white rounded-xl p-6 shadow-lg">
+        <h2 class="text-xl font-semibold mb-2">Referral Bonuses</h2>
+        <p class="text-3xl font-bold text-green-600" id="referral-bonuses">$0.00</p>
+      </div>
+      <div class="card bg-white rounded-xl p-6 shadow-lg">
+        <h2 class="text-xl font-semibold mb-2">Account Status</h2>
+        <p class="text-3xl font-bold text-red-600" id="account-status">Unverified</p>
+      </div>
+    </section>
+
+    <!-- Main Actions -->
+    <section class="flex flex-col md:flex-row gap-6 mb-8">
+      <button id="buy-gmail" class="flex-grow bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-4 font-semibold">Buy Instant Gmail</button>
+      <button id="manage-account" class="flex-grow bg-gray-300 hover:bg-gray-400 rounded-xl py-4 font-semibold">Manage Account</button>
+      <button id="view-referrals" class="flex-grow bg-green-600 hover:bg-green-700 text-white rounded-xl py-4 font-semibold">Referral Stats</button>
+    </section>
+
+    <!-- Recent Activity -->
+    <section class="card bg-white rounded-xl p-6 shadow-lg mb-8 max-h-64 overflow-auto">
+      <h2 class="text-xl font-semibold mb-4">Recent Activity</h2>
+      <ul id="activity-feed" class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
+        <li>No activity yet.</li>
+      </ul>
+    </section>
+
+    <!-- Notifications -->
+    <section class="card bg-white rounded-xl p-6 shadow-lg">
+      <h2 class="text-xl font-semibold mb-4">Notifications</h2>
+      <ul id="notifications" class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
+        <li>Welcome to XBoxMail! Please verify your email.</li>
+      </ul>
+    </section>
+
+    <!-- Logout -->
+    <footer class="mt-12 text-center">
+      <button id="logoutBtn" class="text-red-600 hover:text-red-800 font-semibold">Logout</button>
+    </footer>
+  </div>
+
+  <script>
+    const SUPABASE_URL = "https://tqaakhtfgpdmiyhssehk.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRxYWFraHRmZ3BkbWl5aHNzZWhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTMwOTQyMjYsImV4cCI6MjA2ODY3MDIyNn0.IcjbqHD2v9XQz0zpasTclcev7IsvbFxcs_y2h7AwSHc";
+
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // Show logged-in user's email
+    async function loadUser() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        document.getElementById('user-email').textContent = user.email;
+        // Fake data for demo, replace with real queries
+        document.getElementById('gmail-count').textContent = "12";
+        document.getElementById('referral-bonuses').textContent = "$24.50";
+        document.getElementById('account-status').textContent = user.email_confirmed_at ? "Verified" : "Unverified";
+      } else {
+        alert('You are not logged in.');
+        window.location.href = '/auth.html'; // redirect to auth
+      }
+    }
+
+    // Dark mode toggle
+    document.getElementById('darkModeToggle').addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      const btn = document.getElementById('darkModeToggle');
+      btn.textContent = document.body.classList.contains('dark') ? 'Light Mode' : 'Dark Mode';
+    });
+
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      window.location.href = '/auth.html';
+    });
+
+    // Demo: fake activity feed
+    const activityFeed = document.getElementById('activity-feed');
+    const notifications = document.getElementById('notifications');
+
+    function addActivity(text) {
+      const li = document.createElement('li');
+      li.textContent = text;
+      activityFeed.prepend(li);
+    }
+
+    function addNotification(text) {
+      const li = document.createElement('li');
+      li.textContent = text;
+      notifications.prepend(li);
+    }
+
+    // Demo add some sample activity & notification
+    addActivity('Purchased 1 Gmail account.');
+    addActivity('Referred new user: friend@example.com');
+    addNotification('New promo coming next week!');
+
+    loadUser();
+  </script>
+</body>
+</html>
