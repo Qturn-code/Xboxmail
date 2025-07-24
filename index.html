@@ -2,48 +2,119 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>XBoxmail – Instant Gmail Accounts</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
   <style>
+    /* Base Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-      background: #f0f0f0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
+
+    /* Artistic Background Circles */
+    body::before {
+      content: "";
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle at center, #6e48aa 0%, transparent 70%);
+      border-radius: 50%;
+      top: -200px;
+      left: -200px;
+      opacity: 0.3;
+      z-index: 0;
+    }
+    body::after {
+      content: "";
+      position: absolute;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle at center, #f7b733 0%, transparent 70%);
+      border-radius: 50%;
+      bottom: -300px;
+      right: -300px;
+      opacity: 0.3;
+      z-index: 0;
+    }
+
     h1 {
-      color: #333;
+      font-weight: 700;
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 0 10px rgba(255,255,255,0.3);
     }
+
     p {
-      font-size: 18px;
-      color: #555;
+      font-weight: 400;
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+      color: #ccc;
+      max-width: 480px;
+      position: relative;
+      z-index: 1;
     }
-    button {
-      padding: 15px 25px;
-      background: #4caf50;
+
+    button, a.button {
+      background: #6e48aa;
       border: none;
       color: white;
-      font-size: 18px;
+      padding: 16px 36px;
+      font-size: 1.125rem;
+      border-radius: 50px;
       cursor: pointer;
-      margin-top: 20px;
-      border-radius: 6px;
-    }
-    button:hover {
-      background: #45a049;
-    }
-    .xbox-btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 15px 25px;
-      font-size: 18px;
-      font-weight: bold;
-      color: #fff;
-      background-color: #111;
-      border-radius: 10px;
+      font-weight: 600;
+      transition: background 0.3s ease;
+      position: relative;
+      z-index: 1;
       text-decoration: none;
-      transition: background-color 0.3s ease;
+      display: inline-block;
+      margin: 0 10px;
     }
-    .xbox-btn:hover {
-      background-color: #333;
+
+    button:hover, a.button:hover {
+      background: #8e66c4;
+    }
+
+    /* Container for buttons */
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 500px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      p {
+        font-size: 1rem;
+      }
+      button, a.button {
+        padding: 14px 28px;
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
@@ -52,12 +123,10 @@
   <h1>Welcome to XBoxmail</h1>
   <p>Get instant access to verified Gmail accounts — fast, secure, and hassle-free.</p>
 
-  <!-- Your original button -->
-  <button onclick="alert('Thanks for your interest! We will be in touch soon.')">Contact Us</button>
-
-  <!-- New 25th-century styled button -->
-  <br />
-  <a href="/get-gmail.html" class="xbox-btn">🚀 Get Gmail Instantly</a>
+  <div class="button-group">
+    <button onclick="alert('Thanks for your interest! We will be in touch soon.')">Contact Us</button>
+    <a href="/get-gmail.html" class="button">🚀 Get Gmail Instantly</a>
+  </div>
 
 </body>
 </html>
